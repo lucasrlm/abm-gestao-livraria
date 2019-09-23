@@ -1,14 +1,11 @@
-﻿using GestaoLivraria.Util.Enum;
+﻿using GestaoLivraria.Dados.Entidades;
+using GestaoLivraria.Util.Enum;
 using System.Collections.Generic;
 
 namespace GestaoLivraria.Mock
 {
-    public class PedidoCabecalho
+    public class PedidoCabecalhoMock
     {
-        public int Id { get; set; }
-        public StatusPedido Status { get; set; }
-        public string UsuarioNome { get; set; }
-
         public IEnumerable<PedidoCabecalho> ListarPedidosCabecalho()
         {
             return new List<PedidoCabecalho>()

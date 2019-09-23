@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using GestaoLivraria.Dados.Entidades;
+using System.Collections.Generic;
 
 namespace GestaoLivraria.Mock
 {
-    public class PedidoDetalhes
+    public class PedidoDetalhesMock
     {
-        public int Id { get; set; }
-        public int PedidoCabecalhoId { get; set; }
-        public int LivroId { get; set; }
-
         public IEnumerable<PedidoDetalhes> ListarPedidoDetalhes()
         {
             return new List<PedidoDetalhes>()

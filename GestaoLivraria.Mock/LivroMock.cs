@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using GestaoLivraria.Dados.Entidades;
+using System.Collections.Generic;
 
 namespace GestaoLivraria.Mock
 {
-    public class Livro
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-
+    public class LivroMock
+    {  
         public IEnumerable<Livro> ListarLivros()
         {
             return new List<Livro>()

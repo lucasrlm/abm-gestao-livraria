@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoLivraria.Mock", "..\G
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoLivraria.Util", "..\GestaoLivraria.Util\GestaoLivraria.Util.csproj", "{4A11C224-6076-4DAA-9FA0-164B9842ECB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoLivraria.Dados", "..\GestaoLivraria.Dados\GestaoLivraria.Dados.csproj", "{292EAD6C-220C-4AFA-8DC4-1F2B428ACE2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4A11C224-6076-4DAA-9FA0-164B9842ECB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A11C224-6076-4DAA-9FA0-164B9842ECB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A11C224-6076-4DAA-9FA0-164B9842ECB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{292EAD6C-220C-4AFA-8DC4-1F2B428ACE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{292EAD6C-220C-4AFA-8DC4-1F2B428ACE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{292EAD6C-220C-4AFA-8DC4-1F2B428ACE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{292EAD6C-220C-4AFA-8DC4-1F2B428ACE2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

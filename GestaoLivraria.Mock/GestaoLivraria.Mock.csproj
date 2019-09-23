@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GestaoLivraria.Dados\GestaoLivraria.Dados.csproj" />
     <ProjectReference Include="..\GestaoLivraria.Util\GestaoLivraria.Util.csproj" />
   </ItemGroup>
 
