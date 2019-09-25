@@ -1,4 +1,6 @@
-﻿using GestaoLivraria.Dados.Modelos;
+﻿using GestaoLivraria.Dados.Entidades;
+using GestaoLivraria.Dados.Modelos;
+using GestaoLivraria.Dados.Modelos.CriarLivro;
 using GestaoLivraria.Dados.Modelos.ListarLivros;
 using GestaoLivraria.Negocio;
 using Microsoft.AspNetCore.Mvc;
@@ -27,25 +29,15 @@ namespace GestaoLivraria.Controllers
                  requisicao.TamanhoPagina));
         }
 
-        //// GET api/values
-        //[HttpGet]
-        //public ActionResult<IEnumerable<string>> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
-
-        //// GET api/values/5
-        //[HttpGet("{id}")]
-        //public ActionResult<string> Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        [HttpPost]
+        public ActionResult<Livro> Post([FromBody] CriarLivroRequisicao requisicao)
+        {
+            return Ok(new Livro
+            {
+                Id = 1,
+                Nome = requisicao.Nome
+            });
+        }
 
         //// PUT api/values/5
         //[HttpPut("{id}")]

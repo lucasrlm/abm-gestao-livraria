@@ -2,7 +2,6 @@
 using GestaoLivraria.Dados.Modelos.ListarComentarios;
 using GestaoLivraria.Dados.Modelos.ListarLivros;
 using GestaoLivraria.Repositorio;
-using GestaoLivraria.Util.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
