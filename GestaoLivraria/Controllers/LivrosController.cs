@@ -2,6 +2,7 @@
 using GestaoLivraria.Dados.Modelos.ListarLivros;
 using GestaoLivraria.Negocio;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace GestaoLivraria.Controllers
 {
@@ -11,15 +12,19 @@ namespace GestaoLivraria.Controllers
     {
         private readonly LivroNegocio _livroNegocio = new LivroNegocio();
 
-        // GET api/values
         [HttpGet]
         public ActionResult<Retorno<ListarLivrosRetorno>> Get([FromQuery]Requisicao<ListarLivrosRequisicao> requisicao)
         {
-            return _livroNegocio.ListarLivros(requisicao).RetornarPaginadoOrdenado
+            var retorno = _livroNegocio.ListarLivros(requisicao);
+
+            if (retorno.Itens == null || retorno.Itens.Count() == 0)
+                return NoContent();
+
+            return Ok(retorno.RetornarPaginadoOrdenado
                 (requisicao.PropriedadeOrdenacao,
                  requisicao.OrdemDescendente,
                  requisicao.Deslocamento,
-                 requisicao.TamanhoPagina);
+                 requisicao.TamanhoPagina));
         }
 
         //// GET api/values
