@@ -13,7 +13,7 @@ namespace GestaoLivraria.Negocio
 
         private readonly ComentarioRepositorio _comentarioRepositorio = new ComentarioRepositorio();
 
-        public Retorno<ListarLivrosRetorno> ListarLivros(Requisicao<ListarLivrosRequisicao> requisicao)
+        public IEnumerable<ListarLivrosRetorno> ListarLivros(Requisicao<ListarLivrosRequisicao> requisicao)
         {
             var livrosEntidade = _livroRepositorio.ListarLivros(requisicao);
 
@@ -26,7 +26,6 @@ namespace GestaoLivraria.Negocio
                 }
             });
 
-            var retorno = new Retorno<ListarLivrosRetorno>();
             var itens = new List<ListarLivrosRetorno>();
 
             foreach(var livro in livrosEntidade)
@@ -38,9 +37,7 @@ namespace GestaoLivraria.Negocio
                 });
             }
 
-            retorno.Itens = itens;
-
-            return retorno;
+            return itens;            
         }
     }
 }

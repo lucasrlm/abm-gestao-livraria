@@ -21,7 +21,7 @@ namespace GestaoLivraria.Mock
             return new PedidoCabecalho()
             {
                 Id = 1,
-                Status = StatusPedido.Aberto,
+                StatusPedido = StatusPedido.Aberto,
                 UsuarioNome = "Lucas"
             };
         }
@@ -31,7 +31,7 @@ namespace GestaoLivraria.Mock
             return new PedidoCabecalho()
             {
                 Id = 2,
-                Status = StatusPedido.Entregue,
+                StatusPedido = StatusPedido.Realizado,
                 UsuarioNome = "Lucas"
             };
         }
@@ -41,7 +41,7 @@ namespace GestaoLivraria.Mock
             return new PedidoCabecalho()
             {
                 Id = 3,
-                Status = StatusPedido.Realizado,
+                StatusPedido = StatusPedido.Entregue,
                 UsuarioNome = "Lucas"
             };
         }

@@ -2,7 +2,7 @@
 {
     public enum StatusPedido
     {
-        Aberto,
+        Aberto = 1,
         Realizado,
         Entregue
     }
