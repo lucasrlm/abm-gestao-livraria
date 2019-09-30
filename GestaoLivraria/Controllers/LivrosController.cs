@@ -9,12 +9,20 @@ using System.Linq;
 
 namespace GestaoLivraria.Controllers
 {
+    /// <summary>
+    /// Controller de livros
+    /// </summary>
     [Route("v1/[controller]")]
     [ApiController]
     public class LivrosController : ControllerBase
     {
         private readonly LivroNegocio _livroNegocio = new LivroNegocio();
 
+        /// <summary>
+        /// Lista todos os livros a partir dos filtros passados
+        /// </summary>
+        /// <param name="requisicao"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<Retorno<ListarLivrosRetorno>> Get([FromQuery]Requisicao<ListarLivrosRequisicao> requisicao)
         {
@@ -33,12 +41,23 @@ namespace GestaoLivraria.Controllers
                  requisicao.TamanhoPagina));
         }
 
+        /// <summary>
+        /// Cria um livro
+        /// </summary>
+        /// <param name="requisicao"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<Livro> Post([FromBody]CriarLivroRequisicao requisicao)
         {
             return Ok(_livroNegocio.CriarLivro(requisicao));            
         }
 
+        /// <summary>
+        /// Cria um comentário para um livro
+        /// </summary>
+        /// <param name="livroId"></param>
+        /// <param name="requisicao"></param>
+        /// <returns></returns>
         [HttpPost("{livroId}/Comentarios")]
         public ActionResult<Comentario> PostComentario(int livroId, [FromBody]CriarComentarioRequisicao requisicao)
         {

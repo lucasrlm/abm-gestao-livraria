@@ -4,19 +4,25 @@ using GestaoLivraria.Dados.Modelos.AtualizarPedido;
 using GestaoLivraria.Dados.Modelos.CriarPedido;
 using GestaoLivraria.Dados.Modelos.ListarPedidos;
 using GestaoLivraria.Negocio;
-using GestaoLivraria.Util.Enum;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace GestaoLivraria.Controllers
 {
+    /// <summary>
+    /// Controller de pedidos
+    /// </summary>
     [Route("v1/[controller]")]
     [ApiController]
     public class PedidosController : ControllerBase
     {
         private readonly PedidoNegocio _pedidoNegocio = new PedidoNegocio();
 
+        /// <summary>
+        /// Lista todos os pedidos a partir dos filtros passados
+        /// </summary>
+        /// <param name="requisicao"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<Retorno<Pedido>> Get([FromQuery]Requisicao<ListarPedidosRequisicao> requisicao)
         {
@@ -35,12 +41,23 @@ namespace GestaoLivraria.Controllers
                  requisicao.TamanhoPagina));
         }
 
+        /// <summary>
+        /// Cria um pedido
+        /// </summary>
+        /// <param name="requisicao"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<Pedido> Post([FromBody]CriarPedidoRequisicao requisicao)
         {
             return Ok(_pedidoNegocio.CriarPedido(requisicao));
         }
 
+        /// <summary>
+        /// Atualiza um pedido
+        /// </summary>
+        /// <param name="requisicao"></param>
+        /// <param name="pedidoId"></param>
+        /// <returns></returns>
         [HttpPut("{pedidoId}")]
         public ActionResult<Pedido> Put([FromBody]AtualizarPedidoRequisicao requisicao, int pedidoId)
         {
