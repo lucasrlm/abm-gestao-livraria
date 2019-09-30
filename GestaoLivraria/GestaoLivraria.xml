@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GestaoLivraria</name>
+    </assembly>
+    <members>
+        <member name="T:GestaoLivraria.Controllers.LivrosController">
+            <summary>
+            Controller de livros
+            </summary>
+        </member>
+        <member name="M:GestaoLivraria.Controllers.LivrosController.Get(GestaoLivraria.Dados.Modelos.Requisicao{GestaoLivraria.Dados.Modelos.ListarLivros.ListarLivrosRequisicao})">
+            <summary>
+            Lista todos os livros a partir dos filtros passados
+            </summary>
+            <param name="requisicao"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GestaoLivraria.Controllers.LivrosController.Post(GestaoLivraria.Dados.Modelos.CriarLivro.CriarLivroRequisicao)">
+            <summary>
+            Cria um livro
+            </summary>
+            <param name="requisicao"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GestaoLivraria.Controllers.LivrosController.PostComentario(System.Int32,GestaoLivraria.Dados.Modelos.CriarComentario.CriarComentarioRequisicao)">
+            <summary>
+            Cria um comentário para um livro
+            </summary>
+            <param name="livroId"></param>
+            <param name="requisicao"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GestaoLivraria.Controllers.PedidosController">
+            <summary>
+            Controller de pedidos
+            </summary>
+        </member>
+        <member name="M:GestaoLivraria.Controllers.PedidosController.Get(GestaoLivraria.Dados.Modelos.Requisicao{GestaoLivraria.Dados.Modelos.ListarPedidos.ListarPedidosRequisicao})">
+            <summary>
+            Lista todos os pedidos a partir dos filtros passados
+            </summary>
+            <param name="requisicao"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GestaoLivraria.Controllers.PedidosController.Post(GestaoLivraria.Dados.Modelos.CriarPedido.CriarPedidoRequisicao)">
+            <summary>
+            Cria um pedido
+            </summary>
+            <param name="requisicao"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GestaoLivraria.Controllers.PedidosController.Put(GestaoLivraria.Dados.Modelos.AtualizarPedido.AtualizarPedidoRequisicao,System.Int32)">
+            <summary>
+            Atualiza um pedido
+            </summary>
+            <param name="requisicao"></param>
+            <param name="pedidoId"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

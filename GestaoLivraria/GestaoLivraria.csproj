@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>bin\Debug\netcoreapp2.2\GestaoLivraria.xml</DocumentationFile>
+    <DocumentationFile>GestaoLivraria.xml</DocumentationFile>
     <OutputPath></OutputPath>
   </PropertyGroup>
 
