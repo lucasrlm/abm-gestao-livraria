@@ -36,23 +36,13 @@ namespace GestaoLivraria.Controllers
         [HttpPost]
         public ActionResult<Livro> Post([FromBody]CriarLivroRequisicao requisicao)
         {
-            return Ok(new Livro
-            {
-                Id = 1,
-                Nome = requisicao.Nome
-            });
+            return Ok(_livroNegocio.CriarLivro(requisicao));            
         }
 
         [HttpPost("{livroId}/Comentarios")]
-        public ActionResult<Comentario> Post(int livroId, [FromBody]CriarComentarioRequisicao requisicao)
+        public ActionResult<Comentario> PostComentario(int livroId, [FromBody]CriarComentarioRequisicao requisicao)
         {
-            return Ok(new Comentario
-            {
-                Id = 1,
-                LivroId = livroId,
-                Texto = requisicao.Texto,
-                UsuarioNome = requisicao.UsuarioNome
-            });
+            return Ok(_livroNegocio.CriarComentario(livroId, requisicao));
         }
     }
 }
