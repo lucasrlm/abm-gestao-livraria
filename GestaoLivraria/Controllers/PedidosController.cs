@@ -102,12 +102,8 @@ namespace GestaoLivraria.Controllers
                 Card = card
             };
 
-//            var data = new FormUrlEncodedContent(pagamento.ToDictionary<string>().AsEnumerable());
-            
-            var jsonPagamento = Newtonsoft.Json.JsonConvert.SerializeObject(pagamento);
-
             //enviar o pagamento para a api de transação de cartão de crédito
-            var response = await client.PostAsJsonAsync(_URLPagamento, jsonPagamento);
+            var response = await client.PostAsJsonAsync(_URLPagamento, pagamento);
             var responseString = await response.Content.ReadAsStringAsync();
             
             //atualizar a requisição (status do pedido)
