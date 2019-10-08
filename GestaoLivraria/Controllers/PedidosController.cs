@@ -7,11 +7,9 @@ using GestaoLivraria.Dados.Modelos.ListarPedidos;
 using GestaoLivraria.Negocio;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GestaoLivraria.Util.Enum;
-using transacao_cartao_api.Entities;
 
 namespace GestaoLivraria.Controllers
 {
@@ -24,8 +22,8 @@ namespace GestaoLivraria.Controllers
     {
         private readonly PedidoNegocio _pedidoNegocio = new PedidoNegocio();
         private static readonly HttpClient client = new HttpClient();
-        private readonly string _URLPagamento = "https://localhost:5001/v1/payments";
-
+        private readonly string _URLPagamento = "https://localhost:5001/v1/pagamentos";
+        private readonly string _URLAuditoria = "https://localhost:5004/v1/pedidos/pagamentos";
         /// <summary>
         /// Lista todos os pedidos a partir dos filtros passados
         /// </summary>
@@ -79,32 +77,48 @@ namespace GestaoLivraria.Controllers
         /// <param name="pedidoId"></param>
         /// <returns></returns>
         [HttpPut("{pedidoId}/pagamentos")]
-        public async Task<Pedido> Put(int pedidoId)
+        public async Task<Pedido> PutPedido(int pedidoId)
         {
             //gerar pagamento através do pedido (normalmente haveria alguma função para calcular o valor a se pagar com base no pedido)
-            Card card = new Card
+            Cartao cartao = new Cartao
             {
                 Id = 1,
-                Brand = "Visa",
-                CardHolderName = "José das Graças",
-                ExpirationMonth = 8,
-                ExpirationYear = 23,
-                UserId = 1,
-                SecurityCode = 145
+                Bandeira = "Visa",
+                NomeProprietario = "José das Graças",
+                MesExpiracao = 8,
+                AnoExpiracao = 23,
+                IdUsuario = 1,
+                CodigoSeguranca = 145
             };
             
             Pagamento pagamento = new Pagamento
             {
                 Id = 1,
-                Amount = 500,
-                Currency = "BRL",
-                UserId = 1,
-                Card = card
+                Valor = 500,
+                Moeda = "BRL",
+                IdUsuario = 1,
+                Cartao = cartao
             };
 
             //enviar o pagamento para a api de transação de cartão de crédito
-            var response = await client.PostAsJsonAsync(_URLPagamento, pagamento);
-            var responseString = await response.Content.ReadAsStringAsync();
+            var respostaPagamento = await client.PostAsJsonAsync(_URLPagamento, pagamento);
+            var respostaPagamentoString = await respostaPagamento.Content.ReadAsStringAsync();
+
+            //Fazer tratamento com base na response string
+//            if (respostaPagamentoString == null)
+//            {
+//                
+//            }
+
+            //enviar o pagamento para a api de log
+            var respostaAuditoria = await client.PostAsJsonAsync(_URLAuditoria, pagamento);
+            var respostaAuditoriaString = await respostaAuditoria.Content.ReadAsStringAsync();
+
+            //Fazer tratamento com base na response string
+//            if (respostaAuditoriaString == null)
+//            {
+//                
+//            }
             
             //atualizar a requisição (status do pedido)
             AtualizarPedidoRequisicao requisicao = new AtualizarPedidoRequisicao

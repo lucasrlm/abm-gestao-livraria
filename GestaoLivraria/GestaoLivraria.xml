@@ -58,7 +58,7 @@
             <param name="pedidoId"></param>
             <returns></returns>
         </member>
-        <member name="M:GestaoLivraria.Controllers.PedidosController.Put(System.Int32)">
+        <member name="M:GestaoLivraria.Controllers.PedidosController.PutPedido(System.Int32)">
             <summary>
             Realiza pagamento
             </summary>
