@@ -29,8 +29,8 @@ namespace GestaoLivraria.Negocio
             {
                 Filtros = new ListarComentariosRequisicao()
                 {
-                    LivroId = requisicao.Filtros.Id,
-                    TextoAutocomplete = requisicao.Filtros.TextoAutocomplete
+                    LivroId = requisicao?.Filtros?.Id,
+                    TextoAutocomplete = requisicao?.Filtros?.TextoAutocomplete
                 }
             });
 
@@ -72,7 +72,7 @@ namespace GestaoLivraria.Negocio
 
         public void ValidarParametrosListarLivros(ListarLivrosRequisicao requisicao)
         {
-            if (requisicao.Id.HasValue && requisicao.Id <= 0)
+            if (requisicao != null && requisicao.Id.HasValue && requisicao.Id <= 0)
                 throw new BadRequestException(string.Format(Constantes.Erros.PARAMETRO_INVALIDO, nameof(requisicao.Id)));
         }
 

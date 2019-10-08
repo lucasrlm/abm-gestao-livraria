@@ -88,9 +88,9 @@ namespace GestaoLivraria.Negocio
 
         public void ValidarParametrosListarPedidos(ListarPedidosRequisicao requisicao)
         {
-            if (requisicao.Id <= 0)
+            if (requisicao?.Id <= 0)
                 throw new BadRequestException(string.Format(Constantes.Erros.PARAMETRO_INVALIDO, nameof(requisicao.Id)));
-            if (requisicao.LivroId <= 0)
+            if (requisicao?.LivroId <= 0)
                 throw new BadRequestException(string.Format(Constantes.Erros.PARAMETRO_INVALIDO, nameof(requisicao.LivroId)));
         }
 
