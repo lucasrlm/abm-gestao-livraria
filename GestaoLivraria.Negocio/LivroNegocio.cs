@@ -72,7 +72,7 @@ namespace GestaoLivraria.Negocio
 
         public void ValidarParametrosListarLivros(ListarLivrosRequisicao requisicao)
         {
-            if (requisicao.Id <= 0)
+            if (requisicao.Id.HasValue && requisicao.Id <= 0)
                 throw new BadRequestException(string.Format(Constantes.Erros.PARAMETRO_INVALIDO, nameof(requisicao.Id)));
         }
 
