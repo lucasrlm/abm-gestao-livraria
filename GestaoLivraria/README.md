@@ -1,0 +1,11 @@
+## Atividade 4 - Arquitetura de Backend e Microsserviços: Adriano Passos Braga - Lucas Raphael Leão Martins
+
+### Swaggers das APIs: 
+##### Basta acessar a URL em cada API: swagger/index.html 
+
+### Resenha: Percepções do uso de Microsserviços
+
+O modelo de arquitetura de backend feito por microsserviços tem aumentado cada vez mais a popularidade no mercado. Grandes empresas vêm utilizando esse modelo, que se contrapõe ao modelo arquitetural monolítico. São diversos os fatores para que essa transação esteja acontecendo. Dentre eles, pode-se dizer que as novas tecnologias utilizadas (de cloud, sobretudo) somadas aos novos modelos de negócio que tendem a ser mais descentralizados, dinâmicos e sob demanda. Contudo, o modelo arquitetural de microsserviços não possui apenas vantagens se comparado ao monolítico. Na Atividade 4, em que nos foi passada a tarefa de criar quatro APIs que comunicam entre si, foi possível perceber melhor as características da arquitetura de microsserviços.
+
+O desenvolvimento de diversas APIs em um modelo de microsserviços geram uma maior dificuldade para realizar os testes, uma vez que é necessário a manipulação de diferentes programas que devem comunicar entre si. Além disso, um outro complicador é que há a necessidade de documentar as entradas e saídas das funções para que haja compatibilidade entre as requisições e retornos. Por fim, outro ponto que torna os microsserviços menos acessíveis para a sua implantação é o custo. Apesar de não afetar nessa atividade, em que tudo é feito localmente e não tem as dimensões de uma aplicação de um produto vastamente consumido, pode-se perceber que o estilo arquitetural utilizado no desenvolvimento desse projeto acarretará em um grande custo de servidor, já que ele é abundante em requisições remotas.
+
