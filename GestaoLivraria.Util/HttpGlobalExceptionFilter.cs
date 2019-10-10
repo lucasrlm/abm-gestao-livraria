@@ -3,6 +3,9 @@ using GestaoLivraria.Util.Util;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
+using System.Web.Mvc;
+using ExceptionContext = Microsoft.AspNetCore.Mvc.Filters.ExceptionContext;
+using IExceptionFilter = Microsoft.AspNetCore.Mvc.Filters.IExceptionFilter;
 
 namespace GestaoLivraria.Util
 {
