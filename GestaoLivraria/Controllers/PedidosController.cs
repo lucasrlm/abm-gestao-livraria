@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GestaoLivraria.Dados.Entidades;
 using GestaoLivraria.Dados.Modelos;
 using GestaoLivraria.Dados.Modelos.AtualizarPedido;
@@ -7,6 +8,7 @@ using GestaoLivraria.Dados.Modelos.ListarPedidos;
 using GestaoLivraria.Negocio;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GestaoLivraria.Util.Enum;
@@ -22,8 +24,9 @@ namespace GestaoLivraria.Controllers
     {
         private readonly PedidoNegocio _pedidoNegocio = new PedidoNegocio();
         private static readonly HttpClient client = new HttpClient();
-        private readonly string _URLPagamento = "https://localhost:5001/v1/pagamentos";
-        private readonly string _URLAuditoria = "https://localhost:5004/v1/pedidos/pagamentos";
+        private readonly string _URLPagamento = "https://localhost:5004/v1/pagamentos";
+        private readonly string _URLAuditoria = "https://localhost:5003/v1/pedidos/pagamentos";
+        private readonly string _URLAutenticacao = "https://localhost:5002/v1/users/authenticate";
         /// <summary>
         /// Lista todos os pedidos a partir dos filtros passados
         /// </summary>
@@ -77,7 +80,7 @@ namespace GestaoLivraria.Controllers
         /// <param name="pedidoId"></param>
         /// <returns></returns>
         [HttpPut("{pedidoId}/pagamentos")]
-        public async Task<Pedido> PutPedido(int pedidoId)
+        public async Task<Pedido> PutPedido(int pedidoId, [FromBody]Usuario usuario)
         {
             //gerar pagamento através do pedido (normalmente haveria alguma função para calcular o valor a se pagar com base no pedido)
             Cartao cartao = new Cartao
@@ -100,25 +103,32 @@ namespace GestaoLivraria.Controllers
                 Cartao = cartao
             };
 
+            //enviar o pagamento para a api de autenticação
+            var respostaAutenticacao = await client.PostAsJsonAsync(_URLAutenticacao, usuario);
+            var respostaAutenticacaoString = await respostaAutenticacao.Content.ReadAsStringAsync();
+
+            if (!respostaAutenticacao.IsSuccessStatusCode)
+            {
+                throw new Exception(respostaAutenticacaoString);
+            }
+
             //enviar o pagamento para a api de transação de cartão de crédito
             var respostaPagamento = await client.PostAsJsonAsync(_URLPagamento, pagamento);
             var respostaPagamentoString = await respostaPagamento.Content.ReadAsStringAsync();
 
-            //Fazer tratamento com base na response string
-//            if (respostaPagamentoString == null)
-//            {
-//                
-//            }
+            if (!respostaPagamento.IsSuccessStatusCode)
+            {
+                throw new Exception(respostaPagamentoString);
+            }
 
             //enviar o pagamento para a api de log
             var respostaAuditoria = await client.PostAsJsonAsync(_URLAuditoria, pagamento);
             var respostaAuditoriaString = await respostaAuditoria.Content.ReadAsStringAsync();
-
-            //Fazer tratamento com base na response string
-//            if (respostaAuditoriaString == null)
-//            {
-//                
-//            }
+            
+            if (!respostaAuditoria.IsSuccessStatusCode)
+            {
+                throw new Exception(respostaAuditoriaString);
+            }
             
             //atualizar a requisição (status do pedido)
             AtualizarPedidoRequisicao requisicao = new AtualizarPedidoRequisicao
