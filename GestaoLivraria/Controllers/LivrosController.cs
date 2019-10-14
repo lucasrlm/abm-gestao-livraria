@@ -12,7 +12,7 @@ namespace GestaoLivraria.Controllers
     /// <summary>
     /// Controller de livros
     /// </summary>
-    [Route("v1/[controller]")]
+    [Route("v1/livros")]
     [ApiController]
     public class LivrosController : ControllerBase
     {

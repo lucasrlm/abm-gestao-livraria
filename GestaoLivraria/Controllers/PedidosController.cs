@@ -8,25 +8,29 @@ using GestaoLivraria.Dados.Modelos.ListarPedidos;
 using GestaoLivraria.Negocio;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GestaoLivraria.Util.Enum;
+using Microsoft.Extensions.Configuration;
 
 namespace GestaoLivraria.Controllers
 {
     /// <summary>
     /// Controller de pedidos
     /// </summary>
-    [Route("v1/[controller]")]
+    [Route("v1/pedidos")]
     [ApiController]
     public class PedidosController : ControllerBase
     {
         private readonly PedidoNegocio _pedidoNegocio = new PedidoNegocio();
-        private static readonly HttpClient client = new HttpClient();
-        private readonly string _URLPagamento = "https://localhost:5004/v1/pagamentos";
-        private readonly string _URLAuditoria = "https://localhost:5003/v1/pedidos/pagamentos";
-        private readonly string _URLAutenticacao = "https://localhost:5002/v1/users/authenticate";
+        private static readonly HttpClient _clienteHttp = new HttpClient();
+        private IConfiguration _configuracao;
+        
+        public PedidosController(IConfiguration configuracao)
+        {
+            _configuracao = configuracao;
+        }
+
         /// <summary>
         /// Lista todos os pedidos a partir dos filtros passados
         /// </summary>
@@ -76,13 +80,12 @@ namespace GestaoLivraria.Controllers
         /// <summary>
         /// Realiza pagamento
         /// </summary>
-        /// <param name="requisicao"></param>
+        /// <param name="usuario"></param>
         /// <param name="pedidoId"></param>
         /// <returns></returns>
         [HttpPut("{pedidoId}/pagamentos")]
         public async Task<Pedido> PutPedido(int pedidoId, [FromBody]Usuario usuario)
         {
-            //gerar pagamento através do pedido (normalmente haveria alguma função para calcular o valor a se pagar com base no pedido)
             Cartao cartao = new Cartao
             {
                 Id = 1,
@@ -103,34 +106,30 @@ namespace GestaoLivraria.Controllers
                 Cartao = cartao
             };
 
-            //enviar o pagamento para a api de autenticação
-            var respostaAutenticacao = await client.PostAsJsonAsync(_URLAutenticacao, usuario);
-            var respostaAutenticacaoString = await respostaAutenticacao.Content.ReadAsStringAsync();
+            var respostaAutenticacao = await _clienteHttp.PostAsJsonAsync(_configuracao.GetSection("Microsservicos:Autenticacao").Value, usuario);
+            var respostaAutenticacaoMensagem = await respostaAutenticacao.Content.ReadAsStringAsync();
 
             if (!respostaAutenticacao.IsSuccessStatusCode)
             {
-                throw new Exception(respostaAutenticacaoString);
+                throw new Exception(respostaAutenticacaoMensagem);
             }
 
-            //enviar o pagamento para a api de transação de cartão de crédito
-            var respostaPagamento = await client.PostAsJsonAsync(_URLPagamento, pagamento);
-            var respostaPagamentoString = await respostaPagamento.Content.ReadAsStringAsync();
+            var respostaPagamento = await _clienteHttp.PostAsJsonAsync(_configuracao.GetSection("Microsservicos:Pagamentos").Value, pagamento);
+            var respostaPagamentoMensagem = await respostaPagamento.Content.ReadAsStringAsync();
 
             if (!respostaPagamento.IsSuccessStatusCode)
             {
-                throw new Exception(respostaPagamentoString);
+                throw new Exception(respostaPagamentoMensagem);
             }
 
-            //enviar o pagamento para a api de log
-            var respostaAuditoria = await client.PostAsJsonAsync(_URLAuditoria, pagamento);
-            var respostaAuditoriaString = await respostaAuditoria.Content.ReadAsStringAsync();
+            var respostaAuditoria = await _clienteHttp.PostAsJsonAsync(_configuracao.GetSection("Microsservicos:Auditoria").Value, pagamento);
+            var respostaAuditoriaMensagem = await respostaAuditoria.Content.ReadAsStringAsync();
             
             if (!respostaAuditoria.IsSuccessStatusCode)
             {
-                throw new Exception(respostaAuditoriaString);
+                throw new Exception(respostaAuditoriaMensagem);
             }
             
-            //atualizar a requisição (status do pedido)
             AtualizarPedidoRequisicao requisicao = new AtualizarPedidoRequisicao
             {
                 StatusPedido = StatusPedido.Realizado,
